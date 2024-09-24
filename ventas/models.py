@@ -29,3 +29,5 @@ class Venta(models.Model):
 
     def __str__(self):
         return f'{self.cantidad} x {self.producto.nombre} para {self.cliente.nombre}'
+
+
