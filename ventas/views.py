@@ -54,3 +54,17 @@ def agregar_cliente(request):
 def lista_ventas(request):
     ventas = Venta.objects.all()
     return render(request, 'ventas/lista_ventas.html', {'ventas': ventas})
+
+def registrar_venta(request):
+    if request.method == 'POST':
+        form = VentaForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()  # Aquí se aplica la lógica del modelo para reducir el stock y registrar la venta
+                return redirect('lista_ventas')
+            except ValueError as e:
+                form.add_error(None, str(e))  # Mostrar el error en el formulario
+    else:
+        form = VentaForm()
+
+    return render(request, 'ventas/registrar_venta.html', {'form': form})
